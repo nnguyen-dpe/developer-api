@@ -1,7 +1,23 @@
 version: '3.7'
 
 services:
-  mongo:
+  codejam_api:
+    image: nnguyen2dpe/codejam-api:latest
+    container_name: codejam-api
+    restart: always
+    ports:
+      - "8084:5000"
+    links:
+      - mongo_host
+  endorsement_api:
+    image: nnguyen2dpe/endorsement-api:latest
+    container_name: endorsement-api
+    restart: always
+    ports:
+      - "8083:5000"    
+    links:
+      - postgresql_host  
+  mongo_host:
     image: mongo
     container_name: mongodb
     restart: always
@@ -9,7 +25,7 @@ services:
       - "27017:27017"
     volumes:
       - mongo-db-data:/data/db
-  postgres:
+  postgresql_host:
     image: postgres:latest
     container_name: postgresdb
     restart: always
